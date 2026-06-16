@@ -1,20 +1,24 @@
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:github_issue_manager/provider/providers.dart';
 import 'package:github_issue_manager/state/issue_list_state.dart';
+import 'package:github_issue_manager/usecase/create_issue_usecase.dart';
 import 'package:github_issue_manager/usecase/fetch_issues_usecase.dart';
 
 /// Issue一覧のViewModel
 final issueListStateProvider = StateNotifierProvider<IssueListViewModel, IssueListState>((ref) {
   return IssueListViewModel(
     ref.watch(fetchIssuesUseCaseProvider),
+    ref.watch(createIssueUseCaseProvider),
   );
 });
 
 class IssueListViewModel extends StateNotifier<IssueListState> {
   final FetchIssuesUseCase _fetchIssuesUseCase;
+  final CreateIssueUseCase _createIssueUseCase;
 
   IssueListViewModel(
     this._fetchIssuesUseCase,
+    this._createIssueUseCase,
   ) : super(const IssueListState());
 
   /// Issue一覧を取得
@@ -39,6 +43,28 @@ class IssueListViewModel extends StateNotifier<IssueListState> {
   void changeFilter(String filter) {
     state = state.copyWith(filter: filter);
     fetchIssues();
+  }
+
+  /// Issue作成
+  Future<bool> createIssue({
+    required String title,
+    String? body,
+    List<String>? labels,
+    String? assignee,
+  }) async {
+    try {
+      await _createIssueUseCase.createIssue(
+        title: title,
+        body: body,
+        labels: labels,
+        assignee: assignee,
+      );
+
+      return true;
+    } catch (e) {
+      state = state.copyWith(error: e.toString());
+      return false;
+    }
   }
 
   /// リフレッシュ
