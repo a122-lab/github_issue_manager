@@ -10,7 +10,7 @@ _$GitHubUserModelImpl _$$GitHubUserModelImplFromJson(
         Map<String, dynamic> json) =>
     _$GitHubUserModelImpl(
       id: (json['id'] as num).toInt(),
-      userName: json['userName'] as String,
+      userName: json['login'] as String,
       avatarUrl: json['avatar_url'] as String,
       htmlUrl: json['html_url'] as String,
     );
@@ -19,7 +19,7 @@ Map<String, dynamic> _$$GitHubUserModelImplToJson(
         _$GitHubUserModelImpl instance) =>
     <String, dynamic>{
       'id': instance.id,
-      'userName': instance.userName,
+      'login': instance.userName,
       'avatar_url': instance.avatarUrl,
       'html_url': instance.htmlUrl,
     };

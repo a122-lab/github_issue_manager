@@ -7,7 +7,7 @@ part 'github_user_model.g.dart';
 class GitHubUserModel with _$GitHubUserModel {
   const factory GitHubUserModel({
     required int id,
-    required String userName,
+    @JsonKey(name: 'login') required String userName,
     @JsonKey(name: 'avatar_url') required String avatarUrl,
     @JsonKey(name: 'html_url') required String htmlUrl,
   }) = _GitHubUserModel;
