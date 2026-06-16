@@ -54,6 +54,39 @@ class GitHubRepository {
     }
   }
 
+  /// Issue作成
+  Future<IssueModel> createIssue({
+    required String title,
+    String? body,
+    List<String>? labels,
+    String? assignee,
+  }) async {
+    final requestBody = {
+      'title': title,
+      if (body != null) 'body': body,
+      if (labels != null && labels.isNotEmpty) 'labels': labels,
+      if (assignee != null) 'assignee': assignee,
+    };
+
+    print('📝 Creating issue: $title');
+
+    final response = await http.post(
+      Uri.parse('$_baseUrl/$_repoPath/issues'),
+      headers: {..._headers, 'Content-Type': 'application/json'},
+      body: json.encode(requestBody),
+    );
+
+    print('📊 Create response status: ${response.statusCode}');
+
+    if (response.statusCode == 201) {
+      print('✅ Issue created successfully');
+      return IssueModel.fromGitHub(json.decode(response.body) as Map<String, dynamic>);
+    } else {
+      final errorBody = json.decode(response.body);
+      throw Exception('Failed to create issue: ${response.statusCode}\n${errorBody['message'] ?? response.body}');
+    }
+  }
+
   /// Issue更新
   Future<IssueModel> updateIssue({
     required int number,
