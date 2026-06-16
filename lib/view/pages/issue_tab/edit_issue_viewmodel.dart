@@ -14,12 +14,30 @@ class EditIssueViewModel extends ChangeNotifier {
   late final TextEditingController bodyController;
   late final TextEditingController labelsController;
 
+  bool _isUpdating = false;
+
+  bool get isUpdating => _isUpdating;
+
   EditIssueViewModel(this.issue) {
     titleController = TextEditingController(text: issue.title);
     bodyController = TextEditingController(text: issue.body ?? '');
     labelsController = TextEditingController(
       text: issue.labels.map((e) => e.name).join(', '),
     );
+  }
+
+  /// Issue更新中かどうかを管理
+  void setUpdating(bool value) {
+    _isUpdating = value;
+    notifyListeners();
+  }
+
+  /// Issueのラベルを取得
+  List<String>? getLabels() {
+    final labelsText = labelsController.text.trim();
+    if (labelsText.isEmpty) return null;
+
+    return labelsText.split(',').map((e) => e.trim()).where((e) => e.isNotEmpty).toList();
   }
 
   @override

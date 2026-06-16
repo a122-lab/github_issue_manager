@@ -53,4 +53,48 @@ class GitHubRepository {
       rethrow;
     }
   }
+
+  /// Issue更新
+  Future<IssueModel> updateIssue({
+    required int number,
+    String? title,
+    String? body,
+    String? state,
+    List<String>? labels,
+  }) async {
+    final requestBody = {
+      if (title != null) 'title': title,
+      if (body != null) 'body': body,
+      if (state != null) 'state': state,
+      if (labels != null) 'labels': labels,
+    };
+
+    print('🔄 Updating issue #$number');
+
+    final response = await http.patch(
+      Uri.parse('$_baseUrl/$_repoPath/issues/$number'),
+      headers: {..._headers, 'Content-Type': 'application/json'},
+      body: json.encode(requestBody),
+    );
+
+    print('📊 Update response status: ${response.statusCode}');
+
+    if (response.statusCode == 200) {
+      print('✅ Issue updated successfully');
+      return IssueModel.fromGitHub(json.decode(response.body) as Map<String, dynamic>);
+    } else {
+      final errorBody = json.decode(response.body);
+      throw Exception('Failed to update issue: ${response.statusCode}\n${errorBody['message'] ?? response.body}');
+    }
+  }
+
+  /// Issueクローズ
+  Future<IssueModel> closeIssue(int number) async {
+    return await updateIssue(number: number, state: 'closed');
+  }
+
+  /// Issue再オープン
+  Future<IssueModel> reopenIssue(int number) async {
+    return await updateIssue(number: number, state: 'open');
+  }
 }
