@@ -136,7 +136,7 @@ class IssueDetailContent extends StatelessWidget {
                     Row(
                       children: [
                         UserIcon(
-                          imageUrl: issue.user.avatarUrl,
+                          imageUrl: issue.assignee!.avatarUrl,
                           size: 28,
                         ),
                         const SizedBox(width: 8),

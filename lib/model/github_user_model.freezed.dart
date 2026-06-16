@@ -21,6 +21,7 @@ GitHubUserModel _$GitHubUserModelFromJson(Map<String, dynamic> json) {
 /// @nodoc
 mixin _$GitHubUserModel {
   int get id => throw _privateConstructorUsedError;
+  @JsonKey(name: 'login')
   String get userName => throw _privateConstructorUsedError;
   @JsonKey(name: 'avatar_url')
   String get avatarUrl => throw _privateConstructorUsedError;
@@ -45,7 +46,7 @@ abstract class $GitHubUserModelCopyWith<$Res> {
   @useResult
   $Res call(
       {int id,
-      String userName,
+      @JsonKey(name: 'login') String userName,
       @JsonKey(name: 'avatar_url') String avatarUrl,
       @JsonKey(name: 'html_url') String htmlUrl});
 }
@@ -101,7 +102,7 @@ abstract class _$$GitHubUserModelImplCopyWith<$Res>
   @useResult
   $Res call(
       {int id,
-      String userName,
+      @JsonKey(name: 'login') String userName,
       @JsonKey(name: 'avatar_url') String avatarUrl,
       @JsonKey(name: 'html_url') String htmlUrl});
 }
@@ -150,7 +151,7 @@ class __$$GitHubUserModelImplCopyWithImpl<$Res>
 class _$GitHubUserModelImpl implements _GitHubUserModel {
   const _$GitHubUserModelImpl(
       {required this.id,
-      required this.userName,
+      @JsonKey(name: 'login') required this.userName,
       @JsonKey(name: 'avatar_url') required this.avatarUrl,
       @JsonKey(name: 'html_url') required this.htmlUrl});
 
@@ -160,6 +161,7 @@ class _$GitHubUserModelImpl implements _GitHubUserModel {
   @override
   final int id;
   @override
+  @JsonKey(name: 'login')
   final String userName;
   @override
   @JsonKey(name: 'avatar_url')
@@ -211,7 +213,7 @@ class _$GitHubUserModelImpl implements _GitHubUserModel {
 abstract class _GitHubUserModel implements GitHubUserModel {
   const factory _GitHubUserModel(
           {required final int id,
-          required final String userName,
+          @JsonKey(name: 'login') required final String userName,
           @JsonKey(name: 'avatar_url') required final String avatarUrl,
           @JsonKey(name: 'html_url') required final String htmlUrl}) =
       _$GitHubUserModelImpl;
@@ -222,6 +224,7 @@ abstract class _GitHubUserModel implements GitHubUserModel {
   @override
   int get id;
   @override
+  @JsonKey(name: 'login')
   String get userName;
   @override
   @JsonKey(name: 'avatar_url')

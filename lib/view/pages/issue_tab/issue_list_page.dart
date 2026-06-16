@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:github_issue_manager/model/github_user_model.dart';
-import 'package:github_issue_manager/model/issue_model.dart';
 import 'package:github_issue_manager/view/molecules/filter_tabs.dart';
 import 'package:github_issue_manager/view/organisms/issue_list.dart';
 import 'package:github_issue_manager/view/pages/issue_tab/create_issue_page.dart';
 import 'package:github_issue_manager/view/pages/issue_tab/issue_detail_page.dart';
+import 'package:github_issue_manager/view/pages/issue_tab/issue_list_viewmodel.dart';
 
 /// Screen: Issue一覧画面
 class IssueListPage extends ConsumerStatefulWidget {
@@ -27,6 +26,9 @@ class _IssueListPageState extends ConsumerState<IssueListPage> {
 
   @override
   Widget build(BuildContext context) {
+    final state = ref.watch(issueListStateProvider);
+    final notifier = ref.read(issueListStateProvider.notifier);
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Issues'),
@@ -34,7 +36,9 @@ class _IssueListPageState extends ConsumerState<IssueListPage> {
           // リロードボタン
           IconButton(
             icon: const Icon(Icons.refresh),
-            onPressed: () {},
+            onPressed: () {
+              notifier.refresh();
+            },
           ),
         ],
       ),
@@ -42,29 +46,16 @@ class _IssueListPageState extends ConsumerState<IssueListPage> {
         children: [
           // フィルタータブ
           FilterTabs(
-            currentFilter: 'open',
-            onFilterChanged: (filter) => {},
+            currentFilter: state.filter,
+            onFilterChanged: (filter) => {notifier.changeFilter(filter)},
           ),
 
           // Issue一覧
           Expanded(
             child: IssueList(
-              // TODO ダミーデータを仮で表示
-              issues: [
-                IssueModel(
-                    id: 123,
-                    number: 11,
-                    title: 'dummy issue',
-                    body: 'This is dummy data.',
-                    state: 'open',
-                    user: const GitHubUserModel(id: 123, userName: 'aa', avatarUrl: '', htmlUrl: ''),
-                    labels: [const LabelModel(id: 123, name: 'Label A', color: 'a78986')],
-                    assignee: const GitHubUserModel(id: 123, userName: 'aa', avatarUrl: '', htmlUrl: ''),
-                    createdAt: DateTime(2017, 9, 7, 17, 30),
-                    updatedAt: DateTime(2026, 9, 7, 17, 30),
-                    htmlUrl: '')
-              ],
-              isLoading: false,
+              issues: state.issues,
+              isLoading: state.isLoading,
+              error: state.error,
               onIssueTap: (issue) {
                 Navigator.of(context).push(
                   MaterialPageRoute(
@@ -72,7 +63,9 @@ class _IssueListPageState extends ConsumerState<IssueListPage> {
                   ),
                 );
               },
-              onRefresh: () {},
+              onRefresh: () {
+                notifier.refresh();
+              },
             ),
           ),
         ],
@@ -81,11 +74,16 @@ class _IssueListPageState extends ConsumerState<IssueListPage> {
       // Issue作成ボタン
       floatingActionButton: FloatingActionButton.extended(
         onPressed: () async {
-          await Navigator.of(context).push(
+          final result = await Navigator.of(context).push(
             MaterialPageRoute(
               builder: (context) => const CreateIssuePage(),
             ),
           );
+
+          // Issue作成後に一覧を更新
+          if (result == true) {
+            notifier.refresh();
+          }
         },
         icon: const Icon(Icons.add),
         label: const Text('Issue作成'),
