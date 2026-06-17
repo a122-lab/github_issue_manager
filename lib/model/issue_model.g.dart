@@ -18,9 +18,10 @@ _$IssueModelImpl _$$IssueModelImplFromJson(Map<String, dynamic> json) =>
               ?.map((e) => LabelModel.fromJson(e as Map<String, dynamic>))
               .toList() ??
           const [],
-      assignee: json['assignee'] == null
-          ? null
-          : GitHubUserModel.fromJson(json['assignee'] as Map<String, dynamic>),
+      assignees: (json['assignees'] as List<dynamic>?)
+              ?.map((e) => GitHubUserModel.fromJson(e as Map<String, dynamic>))
+              .toList() ??
+          const [],
       createdAt: DateTime.parse(json['created_at'] as String),
       updatedAt: DateTime.parse(json['updated_at'] as String),
       closedAt: json['closed_at'] == null
@@ -38,7 +39,7 @@ Map<String, dynamic> _$$IssueModelImplToJson(_$IssueModelImpl instance) =>
       'state': instance.state,
       'user': instance.user,
       'labels': instance.labels,
-      'assignee': instance.assignee,
+      'assignees': instance.assignees,
       'created_at': instance.createdAt.toIso8601String(),
       'updated_at': instance.updatedAt.toIso8601String(),
       'closed_at': instance.closedAt?.toIso8601String(),
