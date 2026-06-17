@@ -27,7 +27,7 @@ mixin _$IssueModel {
   String get state => throw _privateConstructorUsedError;
   GitHubUserModel get user => throw _privateConstructorUsedError;
   List<LabelModel> get labels => throw _privateConstructorUsedError;
-  GitHubUserModel? get assignee => throw _privateConstructorUsedError;
+  List<GitHubUserModel> get assignees => throw _privateConstructorUsedError;
   @JsonKey(name: 'created_at')
   DateTime get createdAt => throw _privateConstructorUsedError;
   @JsonKey(name: 'updated_at')
@@ -61,14 +61,13 @@ abstract class $IssueModelCopyWith<$Res> {
       String state,
       GitHubUserModel user,
       List<LabelModel> labels,
-      GitHubUserModel? assignee,
+      List<GitHubUserModel> assignees,
       @JsonKey(name: 'created_at') DateTime createdAt,
       @JsonKey(name: 'updated_at') DateTime updatedAt,
       @JsonKey(name: 'closed_at') DateTime? closedAt,
       @JsonKey(name: 'html_url') String htmlUrl});
 
   $GitHubUserModelCopyWith<$Res> get user;
-  $GitHubUserModelCopyWith<$Res>? get assignee;
 }
 
 /// @nodoc
@@ -93,7 +92,7 @@ class _$IssueModelCopyWithImpl<$Res, $Val extends IssueModel>
     Object? state = null,
     Object? user = null,
     Object? labels = null,
-    Object? assignee = freezed,
+    Object? assignees = null,
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? closedAt = freezed,
@@ -128,10 +127,10 @@ class _$IssueModelCopyWithImpl<$Res, $Val extends IssueModel>
           ? _value.labels
           : labels // ignore: cast_nullable_to_non_nullable
               as List<LabelModel>,
-      assignee: freezed == assignee
-          ? _value.assignee
-          : assignee // ignore: cast_nullable_to_non_nullable
-              as GitHubUserModel?,
+      assignees: null == assignees
+          ? _value.assignees
+          : assignees // ignore: cast_nullable_to_non_nullable
+              as List<GitHubUserModel>,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -160,20 +159,6 @@ class _$IssueModelCopyWithImpl<$Res, $Val extends IssueModel>
       return _then(_value.copyWith(user: value) as $Val);
     });
   }
-
-  /// Create a copy of IssueModel
-  /// with the given fields replaced by the non-null parameter values.
-  @override
-  @pragma('vm:prefer-inline')
-  $GitHubUserModelCopyWith<$Res>? get assignee {
-    if (_value.assignee == null) {
-      return null;
-    }
-
-    return $GitHubUserModelCopyWith<$Res>(_value.assignee!, (value) {
-      return _then(_value.copyWith(assignee: value) as $Val);
-    });
-  }
 }
 
 /// @nodoc
@@ -192,7 +177,7 @@ abstract class _$$IssueModelImplCopyWith<$Res>
       String state,
       GitHubUserModel user,
       List<LabelModel> labels,
-      GitHubUserModel? assignee,
+      List<GitHubUserModel> assignees,
       @JsonKey(name: 'created_at') DateTime createdAt,
       @JsonKey(name: 'updated_at') DateTime updatedAt,
       @JsonKey(name: 'closed_at') DateTime? closedAt,
@@ -200,8 +185,6 @@ abstract class _$$IssueModelImplCopyWith<$Res>
 
   @override
   $GitHubUserModelCopyWith<$Res> get user;
-  @override
-  $GitHubUserModelCopyWith<$Res>? get assignee;
 }
 
 /// @nodoc
@@ -224,7 +207,7 @@ class __$$IssueModelImplCopyWithImpl<$Res>
     Object? state = null,
     Object? user = null,
     Object? labels = null,
-    Object? assignee = freezed,
+    Object? assignees = null,
     Object? createdAt = null,
     Object? updatedAt = null,
     Object? closedAt = freezed,
@@ -259,10 +242,10 @@ class __$$IssueModelImplCopyWithImpl<$Res>
           ? _value._labels
           : labels // ignore: cast_nullable_to_non_nullable
               as List<LabelModel>,
-      assignee: freezed == assignee
-          ? _value.assignee
-          : assignee // ignore: cast_nullable_to_non_nullable
-              as GitHubUserModel?,
+      assignees: null == assignees
+          ? _value._assignees
+          : assignees // ignore: cast_nullable_to_non_nullable
+              as List<GitHubUserModel>,
       createdAt: null == createdAt
           ? _value.createdAt
           : createdAt // ignore: cast_nullable_to_non_nullable
@@ -294,12 +277,13 @@ class _$IssueModelImpl implements _IssueModel {
       required this.state,
       required this.user,
       final List<LabelModel> labels = const [],
-      this.assignee,
+      final List<GitHubUserModel> assignees = const [],
       @JsonKey(name: 'created_at') required this.createdAt,
       @JsonKey(name: 'updated_at') required this.updatedAt,
       @JsonKey(name: 'closed_at') this.closedAt,
       @JsonKey(name: 'html_url') required this.htmlUrl})
-      : _labels = labels;
+      : _labels = labels,
+        _assignees = assignees;
 
   factory _$IssueModelImpl.fromJson(Map<String, dynamic> json) =>
       _$$IssueModelImplFromJson(json);
@@ -325,8 +309,15 @@ class _$IssueModelImpl implements _IssueModel {
     return EqualUnmodifiableListView(_labels);
   }
 
+  final List<GitHubUserModel> _assignees;
   @override
-  final GitHubUserModel? assignee;
+  @JsonKey()
+  List<GitHubUserModel> get assignees {
+    if (_assignees is EqualUnmodifiableListView) return _assignees;
+    // ignore: implicit_dynamic_type
+    return EqualUnmodifiableListView(_assignees);
+  }
+
   @override
   @JsonKey(name: 'created_at')
   final DateTime createdAt;
@@ -342,7 +333,7 @@ class _$IssueModelImpl implements _IssueModel {
 
   @override
   String toString() {
-    return 'IssueModel(id: $id, number: $number, title: $title, body: $body, state: $state, user: $user, labels: $labels, assignee: $assignee, createdAt: $createdAt, updatedAt: $updatedAt, closedAt: $closedAt, htmlUrl: $htmlUrl)';
+    return 'IssueModel(id: $id, number: $number, title: $title, body: $body, state: $state, user: $user, labels: $labels, assignees: $assignees, createdAt: $createdAt, updatedAt: $updatedAt, closedAt: $closedAt, htmlUrl: $htmlUrl)';
   }
 
   @override
@@ -357,8 +348,8 @@ class _$IssueModelImpl implements _IssueModel {
             (identical(other.state, state) || other.state == state) &&
             (identical(other.user, user) || other.user == user) &&
             const DeepCollectionEquality().equals(other._labels, _labels) &&
-            (identical(other.assignee, assignee) ||
-                other.assignee == assignee) &&
+            const DeepCollectionEquality()
+                .equals(other._assignees, _assignees) &&
             (identical(other.createdAt, createdAt) ||
                 other.createdAt == createdAt) &&
             (identical(other.updatedAt, updatedAt) ||
@@ -379,7 +370,7 @@ class _$IssueModelImpl implements _IssueModel {
       state,
       user,
       const DeepCollectionEquality().hash(_labels),
-      assignee,
+      const DeepCollectionEquality().hash(_assignees),
       createdAt,
       updatedAt,
       closedAt,
@@ -410,7 +401,7 @@ abstract class _IssueModel implements IssueModel {
           required final String state,
           required final GitHubUserModel user,
           final List<LabelModel> labels,
-          final GitHubUserModel? assignee,
+          final List<GitHubUserModel> assignees,
           @JsonKey(name: 'created_at') required final DateTime createdAt,
           @JsonKey(name: 'updated_at') required final DateTime updatedAt,
           @JsonKey(name: 'closed_at') final DateTime? closedAt,
@@ -435,7 +426,7 @@ abstract class _IssueModel implements IssueModel {
   @override
   List<LabelModel> get labels;
   @override
-  GitHubUserModel? get assignee;
+  List<GitHubUserModel> get assignees;
   @override
   @JsonKey(name: 'created_at')
   DateTime get createdAt;

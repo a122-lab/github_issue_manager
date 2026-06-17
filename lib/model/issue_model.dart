@@ -1,6 +1,6 @@
 import 'package:freezed_annotation/freezed_annotation.dart';
 
-import 'github_user_model.dart';
+import 'package:github_issue_manager/model/github_user_model.dart';
 
 part 'issue_model.freezed.dart';
 part 'issue_model.g.dart';
@@ -15,7 +15,7 @@ class IssueModel with _$IssueModel {
     required String state,
     required GitHubUserModel user,
     @Default([]) List<LabelModel> labels,
-    GitHubUserModel? assignee,
+    @Default([]) List<GitHubUserModel> assignees,
     @JsonKey(name: 'created_at') required DateTime createdAt,
     @JsonKey(name: 'updated_at') required DateTime updatedAt,
     @JsonKey(name: 'closed_at') DateTime? closedAt,
@@ -33,9 +33,14 @@ class IssueModel with _$IssueModel {
       body: json['body'] as String?,
       state: json['state'] as String,
       user: GitHubUserModel.fromJson(json['user'] as Map<String, dynamic>),
-      labels:
-          (json['labels'] as List<dynamic>?)?.map((e) => LabelModel.fromJson(e as Map<String, dynamic>)).toList() ?? [],
-      assignee: json['assignee'] != null ? GitHubUserModel.fromJson(json['assignee'] as Map<String, dynamic>) : null,
+      labels: (json['labels'] as List<dynamic>?)
+              ?.map((label) => LabelModel.fromJson(label as Map<String, dynamic>))
+              .toList() ??
+          [],
+      assignees: (json['assignees'] as List<dynamic>?)
+              ?.map((assignee) => GitHubUserModel.fromJson(assignee as Map<String, dynamic>))
+              .toList() ??
+          [],
       createdAt: DateTime.parse(json['created_at'] as String),
       updatedAt: DateTime.parse(json['updated_at'] as String),
       closedAt: json['closed_at'] != null ? DateTime.parse(json['closed_at'] as String) : null,

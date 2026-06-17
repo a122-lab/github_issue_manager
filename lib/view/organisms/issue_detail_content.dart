@@ -107,7 +107,7 @@ class IssueDetailContent extends StatelessWidget {
         ],
 
         // 担当者
-        if (issue.assignee != null) ...[
+        if (issue.assignees.isNotEmpty) ...[
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16),
             child: Card(
@@ -133,21 +133,24 @@ class IssueDetailContent extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 12),
-                    Row(
-                      children: [
-                        UserIcon(
-                          imageUrl: issue.assignee!.avatarUrl,
-                          size: 28,
-                        ),
-                        const SizedBox(width: 8),
-                        Text(
-                          issue.assignee!.userName,
-                          style: UITextConst.bodyMedium.copyWith(
-                            color: UIColorConst.textPrimary,
+                    ...issue.assignees.map((assignee) => Padding(
+                          padding: const EdgeInsets.only(bottom: 8),
+                          child: Row(
+                            children: [
+                              UserIcon(
+                                imageUrl: assignee.avatarUrl,
+                                size: 28,
+                              ),
+                              const SizedBox(width: 8),
+                              Text(
+                                assignee.userName,
+                                style: UITextConst.bodyMedium.copyWith(
+                                  color: UIColorConst.textPrimary,
+                                ),
+                              ),
+                            ],
                           ),
-                        ),
-                      ],
-                    ),
+                        )),
                   ],
                 ),
               ),
