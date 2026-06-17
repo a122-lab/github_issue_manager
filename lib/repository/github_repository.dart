@@ -130,4 +130,39 @@ class GitHubRepository {
   Future<IssueModel> reopenIssue(int number) async {
     return await updateIssue(number: number, state: 'open');
   }
+
+  /// Issue検索
+  Future<List<IssueModel>> searchIssues(String query) async {
+    // 本文とタイトル両方で検索 + Pull requestを除外
+    final searchQuery =
+        '$query in:title,body type:issue repo:${EnvKey.githubOwner.envValue}/${EnvKey.githubRepo.envValue}';
+    final encodedQuery = Uri.encodeComponent(searchQuery);
+    final url = '$_baseUrl/search/issues?q=$encodedQuery&per_page=100';
+
+    print('🔍 Searching issues: $url');
+
+    try {
+      final response = await http.get(
+        Uri.parse(url),
+        headers: _headers,
+      );
+
+      print('📊 Search response status: ${response.statusCode}');
+
+      if (response.statusCode == 200) {
+        final data = json.decode(response.body) as Map<String, dynamic>;
+        final List<dynamic> items = data['items'] as List<dynamic>;
+        print('✅ Found ${items.length} issues');
+        return items.map((json) => IssueModel.fromGitHub(json as Map<String, dynamic>)).toList();
+      } else if (response.statusCode == 401) {
+        throw Exception('認証エラー: GitHubトークンが無効です');
+      } else {
+        final errorBody = json.decode(response.body);
+        throw Exception('Failed to search issues: ${response.statusCode}\n${errorBody['message'] ?? response.body}');
+      }
+    } catch (e) {
+      print('❌ Error searching issues: $e');
+      rethrow;
+    }
+  }
 }
