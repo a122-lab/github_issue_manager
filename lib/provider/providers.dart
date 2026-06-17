@@ -3,6 +3,7 @@ import 'package:github_issue_manager/repository/github_repository.dart';
 import 'package:github_issue_manager/usecase/close_issue_usecase.dart';
 import 'package:github_issue_manager/usecase/create_issue_usecase.dart';
 import 'package:github_issue_manager/usecase/fetch_issues_usecase.dart';
+import 'package:github_issue_manager/usecase/search_issues_usecase.dart';
 import 'package:github_issue_manager/usecase/update_issue_usecase.dart';
 
 // Repository, UseCaseのProviderは、各ViewModelから呼びやすいよう、ここで一括管理する
@@ -31,4 +32,8 @@ final updateIssueUseCaseProvider = Provider<UpdateIssueUseCase>((ref) {
 
 final closeIssueUseCaseProvider = Provider<CloseIssueUseCase>((ref) {
   return CloseIssueUseCase(ref.watch(githubRepositoryProvider));
+});
+
+final searchIssuesUseCaseProvider = Provider<SearchIssuesUseCase>((ref) {
+  return SearchIssuesUseCase(ref.watch(githubRepositoryProvider));
 });
