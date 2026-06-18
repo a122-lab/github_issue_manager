@@ -23,12 +23,14 @@ class IssueList extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // ローディング中
     if (isLoading) {
       return const Center(
         child: CircularProgressIndicator(),
       );
     }
 
+    // エラー発生時
     if (error != null) {
       return Center(
         child: Column(
@@ -68,6 +70,7 @@ class IssueList extends StatelessWidget {
       );
     }
 
+    // Issueが存在しない場合
     if (issues.isEmpty) {
       return Center(
         child: Column(
@@ -90,7 +93,10 @@ class IssueList extends StatelessWidget {
       );
     }
 
+    // Issueがある場合
     return RefreshIndicator(
+      backgroundColor: Colors.transparent,
+      elevation: 0,
       onRefresh: () async => onRefresh(),
       child: ListView.builder(
         itemCount: issues.length,

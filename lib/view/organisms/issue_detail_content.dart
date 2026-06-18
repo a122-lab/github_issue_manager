@@ -63,7 +63,7 @@ class IssueDetailContent extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
         ],
 
         // ラベル
@@ -92,7 +92,7 @@ class IssueDetailContent extends StatelessWidget {
                         ),
                       ],
                     ),
-                    const SizedBox(height: 12),
+                    const SizedBox(height: 8),
                     Wrap(
                       spacing: 8,
                       runSpacing: 8,
@@ -103,7 +103,7 @@ class IssueDetailContent extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(height: 16),
+          const SizedBox(height: 8),
         ],
 
         // 担当者
@@ -133,24 +133,26 @@ class IssueDetailContent extends StatelessWidget {
                       ],
                     ),
                     const SizedBox(height: 12),
-                    ...issue.assignees.map((assignee) => Padding(
-                          padding: const EdgeInsets.only(bottom: 8),
-                          child: Row(
-                            children: [
-                              UserIcon(
-                                imageUrl: assignee.avatarUrl,
-                                size: 28,
+                    ...issue.assignees.map(
+                      (assignee) => Padding(
+                        padding: const EdgeInsets.only(bottom: 8),
+                        child: Row(
+                          children: [
+                            UserIcon(
+                              imageUrl: assignee.avatarUrl,
+                              size: 28,
+                            ),
+                            const SizedBox(width: 8),
+                            Text(
+                              assignee.userName,
+                              style: UITextConst.bodyMedium.copyWith(
+                                color: UIColorConst.textPrimary,
                               ),
-                              const SizedBox(width: 8),
-                              Text(
-                                assignee.userName,
-                                style: UITextConst.bodyMedium.copyWith(
-                                  color: UIColorConst.textPrimary,
-                                ),
-                              ),
-                            ],
-                          ),
-                        )),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
                   ],
                 ),
               ),

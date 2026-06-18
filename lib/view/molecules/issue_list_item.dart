@@ -21,7 +21,7 @@ class IssueListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Card(
-      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+      margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 4),
       child: InkWell(
         onTap: onTap,
         borderRadius: BorderRadius.circular(12),

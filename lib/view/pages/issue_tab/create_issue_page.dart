@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:github_issue_manager/core/const/ui_color_const.dart';
 import 'package:github_issue_manager/view/organisms/create_issue_form.dart';
 import 'package:github_issue_manager/view/pages/issue_tab/create_issue_viewmodel.dart';
 import 'package:github_issue_manager/view/pages/issue_tab/issue_list_viewmodel.dart';
+import 'package:github_issue_manager/view/templates/background_scaffold.dart';
 
 /// Screen: Issue作成画面
 class CreateIssuePage extends ConsumerWidget {
@@ -13,38 +15,36 @@ class CreateIssuePage extends ConsumerWidget {
     final viewModel = ref.watch(createIssueViewModelProvider);
     final issueListNotifier = ref.read(issueListStateProvider.notifier);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Issue作成'),
-        actions: [
-          if (viewModel.isCreating)
-            const Center(
-              child: Padding(
-                padding: EdgeInsets.all(16.0),
-                child: SizedBox(
-                  width: 20,
-                  height: 20,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            )
-          else
-            TextButton(
-              onPressed: () => _createIssue(context, ref, viewModel, issueListNotifier),
-              child: const Text(
-                '作成',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
+    return BackgroundScaffold(
+      appBarTitle: 'Create Issue',
+      appBarActions: [
+        if (viewModel.isCreating)
+          const Center(
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: SizedBox(
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: UIColorConst.textPrimary,
                 ),
               ),
             ),
-        ],
-      ),
-      body: CreateIssueForm(
+          )
+        else
+          TextButton(
+            onPressed: () => _createIssue(context, ref, viewModel, issueListNotifier),
+            child: const Text(
+              '作成',
+              style: TextStyle(
+                color: UIColorConst.textPrimary,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+      ],
+      child: CreateIssueForm(
         formKey: viewModel.formKey,
         titleController: viewModel.titleController,
         bodyController: viewModel.bodyController,

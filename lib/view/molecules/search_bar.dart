@@ -23,17 +23,6 @@ class AppSearchBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       margin: const EdgeInsets.all(16),
-      decoration: BoxDecoration(
-        color: UIColorConst.surface,
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.black.withValues(alpha: 0.05),
-            blurRadius: 4,
-            offset: const Offset(0, 2),
-          ),
-        ],
-      ),
       child: TextField(
         controller: controller,
         onChanged: onChanged,

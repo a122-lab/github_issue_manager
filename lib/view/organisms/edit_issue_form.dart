@@ -33,7 +33,7 @@ class EditIssueForm extends StatelessWidget {
         children: [
           // Issue情報カード
           Card(
-            color: UIColorConst.background,
+            color: UIColorConst.editIssueCardBackground,
             child: Padding(
               padding: const EdgeInsets.all(12),
               child: Row(
@@ -92,7 +92,7 @@ class EditIssueForm extends StatelessWidget {
 
           // 作成情報カード
           Card(
-            color: UIColorConst.background,
+            color: UIColorConst.editIssueCardBackground,
             child: Padding(
               padding: const EdgeInsets.all(12),
               child: Column(
