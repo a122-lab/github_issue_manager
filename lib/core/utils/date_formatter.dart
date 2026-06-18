@@ -1,18 +1,23 @@
+import 'package:timezone/timezone.dart' as tz;
+
 /// 日時を "yyyy/MM/dd HH:mm"形式にフォーマット
 String formatDateTime(DateTime dateTime) {
-  return '${dateTime.year}/${_pad(dateTime.month)}/${_pad(dateTime.day)} '
-      '${_pad(dateTime.hour)}:${_pad(dateTime.minute)}';
+  final jst = _toJst(dateTime);
+  return '${jst.year}/${_pad(jst.month)}/${_pad(jst.day)} '
+      '${_pad(jst.hour)}:${_pad(jst.minute)}';
 }
 
 /// 日付を "yyyy/MM/dd" 形式にフォーマット
 String formatDate(DateTime dateTime) {
-  return '${dateTime.year}/${_pad(dateTime.month)}/${_pad(dateTime.day)}';
+  final jst = _toJst(dateTime);
+  return '${jst.year}/${_pad(jst.month)}/${_pad(jst.day)}';
 }
 
 /// 相対的な時間表示 (例: "2時間前", "3日前")
 String formatRelative(DateTime dateTime) {
   final now = DateTime.now();
-  final difference = now.difference(dateTime);
+  final jst = _toJst(dateTime);
+  final difference = now.difference(jst);
 
   if (difference.inDays > 365) {
     final years = (difference.inDays / 365).floor();
@@ -29,6 +34,12 @@ String formatRelative(DateTime dateTime) {
   } else {
     return 'たった今';
   }
+}
+
+/// DateTimeを日本時間（JST）に変換
+DateTime _toJst(DateTime dateTime) {
+  final tokyo = tz.getLocation('Asia/Tokyo');
+  return tz.TZDateTime.from(dateTime, tokyo);
 }
 
 /// 2桁にパディング
