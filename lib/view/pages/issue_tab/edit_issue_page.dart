@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:github_issue_manager/core/const/ui_color_const.dart';
 import 'package:github_issue_manager/model/issue_model.dart';
 import 'package:github_issue_manager/view/organisms/edit_issue_form.dart';
 import 'package:github_issue_manager/view/pages/issue_tab/edit_issue_viewmodel.dart';
 import 'package:github_issue_manager/view/pages/issue_tab/issue_detail_viewmodel.dart';
+import 'package:github_issue_manager/view/templates/background_scaffold.dart';
 
 /// Screen: Issue編集画面
 class EditIssuePage extends ConsumerWidget {
@@ -19,38 +21,36 @@ class EditIssuePage extends ConsumerWidget {
     final viewModel = ref.watch(editIssueViewModelProvider(issue));
     final detailNotifier = ref.read(issueDetailStateProvider(issue).notifier);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('Issue編集'),
-        actions: [
-          if (viewModel.isUpdating)
-            const Center(
-              child: Padding(
-                padding: EdgeInsets.all(16.0),
-                child: SizedBox(
-                  width: 20,
-                  height: 20,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2,
-                    color: Colors.white,
-                  ),
-                ),
-              ),
-            )
-          else
-            TextButton(
-              onPressed: () => _updateIssue(context, ref, viewModel, detailNotifier),
-              child: const Text(
-                '保存',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
+    return BackgroundScaffold(
+      appBarTitle: 'Edit Issue',
+      appBarActions: [
+        if (viewModel.isUpdating)
+          const Center(
+            child: Padding(
+              padding: EdgeInsets.all(16.0),
+              child: SizedBox(
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(
+                  strokeWidth: 2,
+                  color: UIColorConst.textPrimary,
                 ),
               ),
             ),
-        ],
-      ),
-      body: EditIssueForm(
+          )
+        else
+          TextButton(
+            onPressed: () => _updateIssue(context, ref, viewModel, detailNotifier),
+            child: const Text(
+              '保存',
+              style: TextStyle(
+                color: UIColorConst.textPrimary,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+      ],
+      child: EditIssueForm(
         formKey: viewModel.formKey,
         issue: issue,
         titleController: viewModel.titleController,

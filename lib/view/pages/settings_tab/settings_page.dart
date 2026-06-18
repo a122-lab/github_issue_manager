@@ -4,6 +4,7 @@ import 'package:github_issue_manager/core/const/ui_color_const.dart';
 import 'package:github_issue_manager/core/const/ui_text_const.dart';
 import 'package:github_issue_manager/core/enums/env_key.dart';
 import 'package:github_issue_manager/view/organisms/repository_selector.dart';
+import 'package:github_issue_manager/view/templates/background_scaffold.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 /// Screen: 設定画面
@@ -12,11 +13,9 @@ class SettingsPage extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('設定'),
-      ),
-      body: ListView(
+    return BackgroundScaffold(
+      appBarTitle: 'Settings',
+      child: ListView(
         children: [
           // リポジトリ情報
           const RepositorySelector(),
@@ -96,7 +95,7 @@ class SettingsPage extends ConsumerWidget {
           child: Text(
             title,
             style: UITextConst.labelLarge.copyWith(
-              color: UIColorConst.primary,
+              color: UIColorConst.textSecondary,
               fontWeight: UITextConst.bold,
             ),
           ),

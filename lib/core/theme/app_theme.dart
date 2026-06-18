@@ -11,19 +11,25 @@ ThemeData get lightTheme {
     ),
     scaffoldBackgroundColor: UIColorConst.background,
     appBarTheme: const AppBarTheme(
-      backgroundColor: UIColorConst.primary,
-      foregroundColor: UIColorConst.textWhite,
+      backgroundColor: Colors.transparent,
+      foregroundColor: UIColorConst.textPrimary,
+      surfaceTintColor: Colors.transparent,
       elevation: 0,
-      centerTitle: true,
+      centerTitle: false,
       titleTextStyle: TextStyle(
         fontSize: 20,
         fontWeight: UITextConst.semiBold,
         fontFamily: UITextConst.fontFamily,
-        color: UIColorConst.textWhite,
+        color: UIColorConst.textPrimary,
       ),
     ),
+    bottomNavigationBarTheme: BottomNavigationBarThemeData(
+      backgroundColor: UIColorConst.primaryLight.withValues(alpha: 0.7),
+      elevation: 50,
+    ),
     cardTheme: CardThemeData(
-      color: UIColorConst.surface,
+      color: UIColorConst.cardBackground,
+      shadowColor: UIColorConst.cardShadow,
       elevation: 2,
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(12),
@@ -50,11 +56,10 @@ ThemeData get lightTheme {
       fillColor: UIColorConst.surface,
     ),
     floatingActionButtonTheme: FloatingActionButtonThemeData(
-      backgroundColor: UIColorConst.primary,
+      backgroundColor: UIColorConst.primaryLight,
       foregroundColor: UIColorConst.textWhite,
-      shape: RoundedRectangleBorder(
-        borderRadius: BorderRadius.circular(16),
-      ),
+      elevation: 3,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(30)),
     ),
     elevatedButtonTheme: ElevatedButtonThemeData(
       style: ElevatedButton.styleFrom(

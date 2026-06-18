@@ -7,6 +7,7 @@ import 'package:github_issue_manager/view/molecules/search_bar.dart';
 import 'package:github_issue_manager/view/organisms/issue_list.dart';
 import 'package:github_issue_manager/view/pages/issue_tab/issue_detail_page.dart';
 import 'package:github_issue_manager/view/pages/search_tab/search_viewmodel.dart';
+import 'package:github_issue_manager/view/templates/background_scaffold.dart';
 
 /// Screen: 検索画面
 class SearchPage extends ConsumerStatefulWidget {
@@ -30,11 +31,9 @@ class _SearchPageState extends ConsumerState<SearchPage> {
     final state = ref.watch(searchStateProvider);
     final notifier = ref.read(searchStateProvider.notifier);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: const Text('検索'),
-      ),
-      body: Column(
+    return BackgroundScaffold(
+      appBarTitle: 'Search',
+      child: Column(
         children: [
           // 検索バー
           AppSearchBar(
@@ -106,13 +105,12 @@ class _SearchPageState extends ConsumerState<SearchPage> {
         // 結果件数
         Container(
           padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-          color: UIColorConst.background,
           child: Row(
             children: [
               Text(
                 '${state.results.length}件の結果',
                 style: UITextConst.bodySmall.copyWith(
-                  color: UIColorConst.textSecondary,
+                  color: UIColorConst.textPrimary,
                 ),
               ),
             ],

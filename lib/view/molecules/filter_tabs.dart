@@ -16,7 +16,10 @@ class FilterTabs extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      color: UIColorConst.surface,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(30),
+      ),
+      margin: const EdgeInsets.symmetric(horizontal: 10),
       padding: const EdgeInsets.symmetric(vertical: 8),
       child: Row(
         children: [
@@ -40,22 +43,19 @@ class FilterTabs extends StatelessWidget {
     return InkWell(
       onTap: () => onFilterChanged(filter),
       child: Container(
-        padding: const EdgeInsets.symmetric(vertical: 12),
         decoration: BoxDecoration(
-          border: Border(
-            bottom: BorderSide(
-              color: isSelected ? UIColorConst.primary : Colors.transparent,
-              width: 2,
-            ),
-          ),
+          color: isSelected ? UIColorConst.primaryLight : UIColorConst.surface,
+          borderRadius: BorderRadius.circular(30),
         ),
+        padding: const EdgeInsets.symmetric(vertical: 12),
+        margin: const EdgeInsets.symmetric(horizontal: 2),
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Icon(
               icon,
               size: 18,
-              color: isSelected ? UIColorConst.primary : UIColorConst.textSecondary,
+              color: isSelected ? UIColorConst.primaryDark : UIColorConst.textSecondary,
             ),
             const SizedBox(width: 6),
             Text(

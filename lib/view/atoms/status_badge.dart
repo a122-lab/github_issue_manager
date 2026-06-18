@@ -27,12 +27,12 @@ class StatusBadge extends StatelessWidget {
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 16, color: UIColorConst.textWhite),
+          Icon(icon, size: 16, color: isOpen ? UIColorConst.issueOpenText : UIColorConst.issueClosedText),
           const SizedBox(width: 6),
           Text(
             text,
             style: UITextConst.labelMedium.copyWith(
-              color: UIColorConst.textWhite,
+              color: isOpen ? UIColorConst.issueOpenText : UIColorConst.issueClosedText,
               fontWeight: UITextConst.bold,
             ),
           ),
