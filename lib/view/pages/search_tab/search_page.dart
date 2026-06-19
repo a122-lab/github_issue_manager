@@ -33,31 +33,34 @@ class _SearchPageState extends ConsumerState<SearchPage> {
 
     return BackgroundScaffold(
       appBarTitle: 'Search',
-      child: Column(
-        children: [
-          // 検索バー
-          AppSearchBar(
-            controller: _searchController,
-            hintText: 'Issueを検索',
-            onChanged: (value) {
-              notifier.updateQuery(value);
-            },
-            onSubmitted: () {
-              if (_searchController.text.isNotEmpty) {
-                notifier.search(_searchController.text);
-              }
-            },
-            onClear: () {
-              _searchController.clear();
-              notifier.clear();
-            },
-          ),
+      child: GestureDetector(
+        onTap: () => primaryFocus?.unfocus(),
+        child: Column(
+          children: [
+            // 検索バー
+            AppSearchBar(
+              controller: _searchController,
+              hintText: 'Issueを検索',
+              onChanged: (value) {
+                notifier.updateQuery(value);
+              },
+              onSubmitted: () {
+                if (_searchController.text.isNotEmpty) {
+                  notifier.search(_searchController.text);
+                }
+              },
+              onClear: () {
+                _searchController.clear();
+                notifier.clear();
+              },
+            ),
 
-          // 検索結果
-          Expanded(
-            child: _buildSearchResults(state, notifier),
-          ),
-        ],
+            // 検索結果
+            Expanded(
+              child: _buildSearchResults(state, notifier),
+            ),
+          ],
+        ),
       ),
     );
   }

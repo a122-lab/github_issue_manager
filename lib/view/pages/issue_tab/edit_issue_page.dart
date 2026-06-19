@@ -50,12 +50,15 @@ class EditIssuePage extends ConsumerWidget {
             ),
           ),
       ],
-      child: EditIssueForm(
-        formKey: viewModel.formKey,
-        issue: issue,
-        titleController: viewModel.titleController,
-        bodyController: viewModel.bodyController,
-        labelsController: viewModel.labelsController,
+      child: GestureDetector(
+        onTap: () => primaryFocus?.unfocus(),
+        child: EditIssueForm(
+          formKey: viewModel.formKey,
+          issue: issue,
+          titleController: viewModel.titleController,
+          bodyController: viewModel.bodyController,
+          labelsController: viewModel.labelsController,
+        ),
       ),
     );
   }
