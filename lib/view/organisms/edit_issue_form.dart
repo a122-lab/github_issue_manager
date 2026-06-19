@@ -25,7 +25,6 @@ class EditIssueForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // TODO フォーム外タップでキーボードを閉じるようにしたい
     return Form(
       key: formKey,
       child: ListView(

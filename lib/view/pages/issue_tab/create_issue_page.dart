@@ -44,12 +44,15 @@ class CreateIssuePage extends ConsumerWidget {
             ),
           ),
       ],
-      child: CreateIssueForm(
-        formKey: viewModel.formKey,
-        titleController: viewModel.titleController,
-        bodyController: viewModel.bodyController,
-        labelsController: viewModel.labelsController,
-        assigneeController: viewModel.assigneeController,
+      child: GestureDetector(
+        onTap: () => primaryFocus?.unfocus(),
+        child: CreateIssueForm(
+          formKey: viewModel.formKey,
+          titleController: viewModel.titleController,
+          bodyController: viewModel.bodyController,
+          labelsController: viewModel.labelsController,
+          assigneeController: viewModel.assigneeController,
+        ),
       ),
     );
   }
